@@ -21,7 +21,6 @@ package com.thrillsoft.gatling.any
 
 import com.thrillsoft.gatling.any.Predef._
 import io.gatling.core.Predef._
-import scala.concurrent.duration._
 import scala.util.Random
 
 class AnySimulation extends Simulation {
@@ -29,24 +28,24 @@ class AnySimulation extends Simulation {
     scenario("count").exec(any("count",
       () => {
         count(Int.MaxValue - 1)
-      })).inject(ramp(5 users) over (1 seconds)),
+      })).inject(atOnceUsers(5)),
     scenario("sort").exec(anyParam[Seq[Int]]("sort",
       (s: Seq[Int]) => {
         sort(s)
       }, () => {
         random(1000)
-      })).inject(ramp(10 users) over (1 seconds)),
+      })).inject(atOnceUsers(10)),
     scenario("permute").exec(anyCtx[String]("permute",
       (s: String) => {
         permute(s)
-      }, () => newUser)).inject(ramp(5 users) over (1 seconds)),
+      }, () => newUser)).inject(atOnceUsers(5)),
     scenario("sum").exec(anyCtxParam[String, Seq[Int]]("sum",
       (c: String, p: Seq[Int]) => {
         sum(c, p)
       }, () => newUser
       , (c: String) => {
         random(10000)
-      })).inject(ramp(20 users) over (1 seconds)))
+      })).inject(atOnceUsers(20)))
 
   def count = (x: Int) => {
     for (a <- 0 to x by 10000)

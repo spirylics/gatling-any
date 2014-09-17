@@ -20,12 +20,12 @@
 package com.thrillsoft.gatling.any
 
 object Predef {
-  def anyCtxParam[C, P](name: String, run: (C, P) => Unit, makeCtx: () => C = null, makeParam: (C) => P = null) = AnyActionBuilder.anyCtxParam(name, run, makeCtx, makeParam)
+  def anyCtxParam[C, P](name: String, run: (C, P) => Unit, makeCtx: () => C, makeParam: (C) => P) = new AnyActionBuilder[C, P](name, run, Some(makeCtx), Some(makeParam))
 
-  def anyParam[P](name: String, run: (P) => Unit, makeParam: () => P = null) = AnyActionBuilder.anyParam(name, run, makeParam)
+  def anyParam[P](name: String, run: (P) => Unit, makeParam: () => P) = new AnyActionBuilder[Any, P](name, (ctx: Any, param: P) => {run(param)}, None, Some((ctx: Any) => {makeParam()}))
 
-  def anyCtx[C](name: String, run: (C) => Unit, makeCtx: () => C = null) = AnyActionBuilder.anyCtx(name, run, makeCtx)
+  def anyCtx[C](name: String, run: (C) => Unit, makeCtx: () => C) = new AnyActionBuilder[C, Any](name, (ctx: C, param: Any) => {run(ctx)}, Some(makeCtx))
 
-  def any(name: String, run: () => Unit) = AnyActionBuilder.any(name, run)
+  def any(name: String, run: () => Unit) = new AnyActionBuilder[Any, Any](name, (ctx: Any, param: Any) => {run()})
 
 }

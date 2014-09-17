@@ -20,34 +20,14 @@
         </license>
     </licenses>
 
-    <repositories>
-        <repository>
-            <id>excilys</id>
-            <name>Excilys Repository</name>
-            <url>http://repository.excilys.com/content/groups/public</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>excilys</id>
-            <name>Excilys Repository</name>
-            <url>http://repository.excilys.com/content/groups/public</url>
-        </pluginRepository>
-    </pluginRepositories>
-
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <encoding>UTF-8</encoding>
         <scala.tools.version>2.10</scala.tools.version>
-        <scala.version>2.10.2</scala.version>
+        <scala.version>2.10.4</scala.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!--http://repository.excilys.com/content/groups/public/io/gatling/highcharts/gatling-highcharts/-->
-        <!--https://groups.google.com/forum/#!searchin/gatling/during/gatling/A0DJbgYXVIA/CiWpxRW1ZQ4J-->
-        <!--https://groups.google.com/forum/#!msg/gatling/47e1fVQAzuQ/3qJgZrX2WA4J-->
-        <!--https://github.com/excilys/gatling/wiki/Changelog-->
-        <gatling.version>2.0.0-M3a</gatling.version>
+        <gatling.version>2.0.0-RC5</gatling.version>
         <gatling.simulationClass>com.thrillsoft.gatling.any.AnySimulation</gatling.simulationClass>
     </properties>
 
@@ -68,13 +48,13 @@
         <dependency>
             <groupId>org.specs2</groupId>
             <artifactId>specs2_${scala.tools.version}</artifactId>
-            <version>2.0</version>
+            <version>2.4.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${scala.tools.version}</artifactId>
-            <version>2.0.M6-SNAP26</version>
+            <version>2.2.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

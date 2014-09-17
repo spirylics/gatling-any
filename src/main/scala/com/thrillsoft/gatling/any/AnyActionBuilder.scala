@@ -21,29 +21,10 @@ package com.thrillsoft.gatling.any
 
 import io.gatling.core.action.builder.ActionBuilder
 import akka.actor.{Props, ActorRef}
-import io.gatling.core.action._
+import io.gatling.core.config.Protocols
 
-object AnyActionBuilder {
-  def anyCtxParam[C, P](name: String, run: (C, P) => Unit, makeCtx: () => C = null, makeParam: (C) => P = null) = new AnyActionBuilder[C, P](name, run, makeCtx, makeParam)
+class AnyActionBuilder[C, P](name: String, run: (C, P) => Unit, makeCtx: Option[() => C] = None, makeParam: Option[(C) => P] = None) extends ActionBuilder {
 
-  def anyParam[P](name: String, run: (P) => Unit, makeParam: () => P = null) = new AnyActionBuilder[Any, P](name, (ctx: Any, param: P) => {
-    run(param)
-  }, null, (ctx: Any) => {
-    makeParam()
-  })
-
-  def anyCtx[C](name: String, run: (C) => Unit, makeCtx: () => C = null) = new AnyActionBuilder[C, Any](name, (ctx: C, param: Any) => {
-    run(ctx)
-  }, makeCtx)
-
-  def any(name: String, run: () => Unit) = new AnyActionBuilder(name, (ctx: Any, param: Any) => {
-    run()
-  })
-}
-
-
-class AnyActionBuilder[C, P](name: String, run: (C, P) => Unit, makeCtx: () => C = null, makeParam: (C) => P = null) extends ActionBuilder {
-
-  def build(next: ActorRef) =
+  override def build(next: ActorRef, protocols: Protocols) =
     system.actorOf(Props(new AnyAction[C, P](next, name, run, makeCtx, makeParam)))
 }
